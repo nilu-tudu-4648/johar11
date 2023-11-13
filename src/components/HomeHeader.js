@@ -32,15 +32,23 @@ const HomeHeader = ({ style, iconColor, header, headerColor = "" }) => {
           size={SIZES.largeTitle * 0.8}
           color={iconColor ? iconColor : COLORS.white}
         />
-        {header ? (
-          <AppText
-            bold={true}
-            color={headerColor ? headerColor : COLORS.white}
-            size={2}
-          >
-            {header}
-          </AppText>
-        ) : null}
+        <View
+          style={{
+            width: "33%",
+            alignItems: "center",
+          }}
+        >
+          {header ? (
+            <AppText
+              bold={true}
+              color={headerColor ? headerColor : COLORS.white}
+              size={2}
+            >
+              {header}
+            </AppText>
+          ) : null}
+        </View>
+
         <TouchableOpacity
           onPress={() =>
             navigation.navigate(NAVIGATION.PROFILE, {

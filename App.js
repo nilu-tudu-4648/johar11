@@ -39,6 +39,7 @@ const App = () => {
   // eas update --branch preview --message "Updating the app"
 
   // npx expo  start --dev-client
+  // eas build --platform android
   return (
     <NavigationContainer>
       <Provider store={store}>
