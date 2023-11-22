@@ -10,12 +10,11 @@ const PointsSystemScreen = () => {
     { "Defender Or GoalKeeper": 60 },
     { "GoalKeeper Saved": 10 },
     { "Head Goal": 70 },
-    { "Cornar Goal": 80 },
+    { "Corner Goal": 80 },
     { "Shot on Target": 10 },
-    { "Hat rik": 100 },
+    { "Hat-trick": 100 },
   ];
   const MinusPoints = [
-    { Foul: -7 },
     { "Yellow Card": -10 },
     { "Red Card": -20 },
   ];
@@ -23,6 +22,10 @@ const PointsSystemScreen = () => {
     { Goal: 25 },
     { "Keeper Saved": 25 },
     { "Goal Missed": -10 },
+  ];
+  const OthersPoints = [
+    { Captain: "2X" },
+    { "Vice-Captain": "1.5X" },
   ];
   const RenderItem = ({ item }) => (
     <View style={{ ...FSTYLES, padding: SIZES.h6 }}>
@@ -49,6 +52,10 @@ const PointsSystemScreen = () => {
         ))}
         <AppText style={styles.heading}>Penalty Points :-</AppText>
         {PenaltyPoints.map((item, i) => (
+          <RenderItem item={item} key={i} />
+        ))}
+        <AppText style={styles.heading}>Others Points :-</AppText>
+        {OthersPoints.map((item, i) => (
           <RenderItem item={item} key={i} />
         ))}
       </ScrollView>
