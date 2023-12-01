@@ -101,7 +101,7 @@ const SelectCaptainScreen = ({ navigation }) => {
               <AppText size={1.3} bold={true}>
                 {item.name}
               </AppText>
-              <AppText size={1.2}>{item.points} pts</AppText>
+              <AppText size={1.2}>{item.teamName}</AppText>
             </View>
           </View>
           <View
@@ -189,7 +189,6 @@ const SelectCaptainScreen = ({ navigation }) => {
             style={{ ...FSTYLES, width: "40%", paddingHorizontal: SIZES.base }}
           >
             <AppText size={1.4}>PLAYER</AppText>
-            <AppText size={1.4}>POINTS</AppText>
           </View>
           <View
             style={{ ...FSTYLES, width: "40%", paddingHorizontal: SIZES.base }}
