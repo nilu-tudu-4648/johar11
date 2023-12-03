@@ -20,8 +20,15 @@ import {
 } from "../screens";
 import { StyleHeader } from "../components";
 import CreateTeamScreen from "../screens/CreateTeamScreen";
+import * as Notifications from "expo-notifications";
 const Stack = createNativeStackNavigator();
-
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 function AppNavigator() {
   const { userLoggedIn, user } = useSelector(
     (state) => state.entities.userReducer

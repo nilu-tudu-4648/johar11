@@ -7,13 +7,18 @@ import AppText from "../components/AppText";
 import FormInput from "../components/FormInput";
 import AppLoader from "../components/AppLoader";
 import { db } from "../../firebaseConfig";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
 import { NAVIGATION } from "../constants/routes";
 import { useDispatch } from "react-redux";
 import { setLoginUser } from "../store/userReducer";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { FIRESTORE_COLLECTIONS } from "../constants/data";
-import { showToast } from "../constants/functions";
+import { showToast, updateUser } from "../constants/functions";
 import { TouchableOpacity } from "react-native";
 
 const LoginScreen = ({ navigation }) => {
@@ -55,12 +60,11 @@ const LoginScreen = ({ navigation }) => {
       console.log("User login failed.");
       return;
     }
-
     const checkPassword = userExists.password === password;
-
     if (checkPassword) {
       dispatch(setLoginUser(userExists));
-      await AsyncStorage.setItem("loggedInUser", JSON.stringify(userExists));
+      const fcmToken = await AsyncStorage.getItem("fcmToken");
+      await updateUser({ ...userExists, fcmToken }, dispatch);
       showToast("Login successful");
     } else {
       showToast("Invalid credentials");

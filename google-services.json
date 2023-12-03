@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "917626442053",
+    "project_id": "johar-football",
+    "storage_bucket": "johar-football.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917626442053:android:f70d011ddbd617167fee2c",
+        "android_client_info": {
+          "package_name": "com.nilesh98.johar11"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgs-faQvLEOZR9n73oo-OlGv_YduKsJe0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

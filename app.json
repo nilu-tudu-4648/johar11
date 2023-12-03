@@ -2,7 +2,7 @@
   "expo": {
     "name": "johar11",
     "slug": "johar11",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,8 @@
       "supportsTablet": true
     },
     "android": {
-      "versionCode": 5,
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
