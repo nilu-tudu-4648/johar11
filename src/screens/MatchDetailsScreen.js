@@ -52,7 +52,7 @@ const MatchDetailsScreen = ({ navigation, route }) => {
     <View style={{ flex: 1 }}>
       <AppLoader loading={loading} />
       {/* header */}
-      <ContestHeader />
+      <ContestHeader completed={completed} />
       {/* body */}
       <View style={{ padding: SIZES.base }}>
         <AppText style={{ fontWeight: "400" }} size={1.5}>

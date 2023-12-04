@@ -6,7 +6,7 @@ import { COLORS, WNFONTS, SIZES } from "../constants/theme";
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 
-const ContestHeader = ({ title }) => {
+const ContestHeader = ({ title, completed }) => {
   const { selectedTournament } = useSelector(
     (state) => state.entities.userReducer
   );
@@ -95,7 +95,7 @@ const ContestHeader = ({ title }) => {
               : `${selectedTournament.firstTeamName} vs ${selectedTournament.secondTeamName}`}
           </AppText>
           <AppText color={COLORS.white} style={WNFONTS.h6}>
-            {formattedTime} left
+            {completed ? "" : formattedTime + " left"} 
           </AppText>
         </View>
       </View>

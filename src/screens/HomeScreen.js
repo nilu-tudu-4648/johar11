@@ -1,9 +1,9 @@
-import { ScrollView, View, Image, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppLoader, AppText, AppView, HomeHeader } from "../components";
 import MatchesItem from "../components/MatchesItem";
-import { filterPastEvents, filterUpcomingEvents } from "../constants/functions";
+import { filterUpcomingEvents } from "../constants/functions";
 import { setpastTournaments, settournaments } from "../store/userReducer";
 import { db } from "../../firebaseConfig";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
@@ -30,9 +30,14 @@ const HomeScreen = () => {
         return arr.push({ id, ...data });
       });
 
-      const upcomingEvents = filterUpcomingEvents(arr);
+      const events = filterUpcomingEvents(arr);
+      const upcomingEvents = events.filter(
+        (item) => item.status !== "completed"
+      );
+      const completedEvents = events.filter(
+        (item) => item.status === "completed"
+      );
       dispatch(settournaments(upcomingEvents));
-      const completedEvents = filterPastEvents(arr);
       dispatch(setpastTournaments(completedEvents));
       setloading(false);
     } catch (error) {
