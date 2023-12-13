@@ -18,7 +18,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch();
   const [loading, setloading] = useState(true);
   const [Completed, setCompleted] = useState(false);
-
+  
   const fetchData = async () => {
     try {
       const q = query(collection(db, FIRESTORE_COLLECTIONS.TOURNAMENTS));
@@ -114,13 +114,13 @@ const HomeScreen = () => {
           {Completed ? (
             <>
               {pastTournaments.map((item, i) => (
-                <MatchesItem key={i} item={item} completed={Completed} />
+                <MatchesItem key={i} item={item} />
               ))}
             </>
           ) : (
             <>
               {tournaments.map((item, i) => (
-                <MatchesItem key={i} item={item} completed={Completed} />
+                <MatchesItem key={i} item={item} />
               ))}
             </>
           )}

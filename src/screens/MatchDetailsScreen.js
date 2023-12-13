@@ -59,7 +59,7 @@ const MatchDetailsScreen = ({ navigation, route }) => {
           Prize Pool
         </AppText>
         <AppText>₹{item?.prizeAmount}</AppText>
-        {completed ? (
+        {item.status === "completed" ? (
           <AppText>
             Match is{" "}
             {item.status ? item.status : `Ongoing please wait for complete`}
