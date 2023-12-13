@@ -51,7 +51,7 @@ const DrawerItems = ({ navigation }) => {
           }}
         >
           <AppText size={1.5} color={COLORS.background}>
-            1.0.7
+            1.0.8
           </AppText>
           <AppButton
             title={"Logout"}
