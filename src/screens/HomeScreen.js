@@ -32,10 +32,10 @@ const HomeScreen = () => {
 
       const events = filterUpcomingEvents(arr);
       const upcomingEvents = events.filter(
-        (item) => item.status !== "completed"
+        (item) => item.status !== "completed" && item.isTesting !=='true'
       );
       const completedEvents = events.filter(
-        (item) => item.status === "completed"
+        (item) => item.status === "completed" && item.isTesting !=='true'
       );
       dispatch(settournaments(upcomingEvents));
       dispatch(setpastTournaments(completedEvents));

@@ -6,13 +6,13 @@ import { FIRESTORE_COLLECTIONS } from "./data";
 import { setcreatePlayers, setleaderBoard } from "../store/playersReducer";
 import {
   collection,
-  deleteDoc,
   doc,
   getDocs,
   query,
   updateDoc,
   where,
   onSnapshot,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import {
@@ -282,7 +282,7 @@ export const getTournaments = async (dispatch, setloading) => {
     console.log(error);
   }
 };
-export const getLeaderBoard = async (dispatch, id,setloading) => {
+export const getLeaderBoard = async (dispatch, id, setloading) => {
   try {
     const q = query(
       collection(db, FIRESTORE_COLLECTIONS.CREATED_TEAMS),
@@ -296,7 +296,7 @@ export const getLeaderBoard = async (dispatch, id,setloading) => {
       return arr.push({ id, ...data });
     });
     dispatch(setleaderBoard(arr));
-    if(setloading){
+    if (setloading) {
       setloading(false);
     }
   } catch (error) {
@@ -336,95 +336,21 @@ export const getPlayersfromTeamName = async (
     console.log(error);
   }
 };
+export const getPrizeDistributionData = async (matchId,fn) => {
+  try {
+    const docRef = doc(db, FIRESTORE_COLLECTIONS.PRIZE_DISTRIBUTE, matchId);
+    const docSnap = await getDoc(docRef);
 
-//admin apis
-export const getAllUsers = async (dispatch, func) => {
-  try {
-    const q = query(
-      collection(db, FIRESTORE_COLLECTIONS.USERS),
-      where("admin", "==", "false")
-    );
-    const querySnapshot = await getDocs(q);
-    let arr = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      const id = doc.id;
-      return arr.push({ id, ...data });
-    });
-    dispatch(setAllUsers(arr));
-    func(false);
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const getAllTeams = async (dispatch, func) => {
-  try {
-    const q = query(collection(db, FIRESTORE_COLLECTIONS.TEAM_NAMES));
-    const querySnapshot = await getDocs(q);
-    let arr = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      const id = doc.id;
-      return arr.push({ id, ...data });
-    });
-    dispatch(setAllTeams(arr));
-    func(false);
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const deleteTeam = async (id, func) => {
-  try {
-    await deleteDoc(doc(db, FIRESTORE_COLLECTIONS.TEAM_NAMES, id));
-    func();
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const deleteUser = async (id, func) => {
-  try {
-    await deleteDoc(doc(db, FIRESTORE_COLLECTIONS.PLAYERS, id));
-    func();
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const deleteMatch = async (id, func) => {
-  try {
-    await deleteDoc(doc(db, FIRESTORE_COLLECTIONS.TOURNAMENTS, id));
-    func();
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const getAllPlayers = async (dispatch, func) => {
-  try {
-    const q = query(collection(db, FIRESTORE_COLLECTIONS.PLAYERS));
-    const querySnapshot = await getDocs(q);
-    let arr = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      const id = doc.id;
-      return arr.push({ id, ...data });
-    });
-    dispatch(setAllPlayers(arr));
-    func(false);
-  } catch (error) {
-    console.log(error);
-  }
-};
-export const getAllMatches = async (dispatch, func) => {
-  try {
-    const q = query(collection(db, FIRESTORE_COLLECTIONS.TOURNAMENTS));
-    const querySnapshot = await getDocs(q);
-    let arr = [];
-    querySnapshot.forEach((doc) => {
-      const data = doc.data();
-      const id = doc.id;
-      return arr.push({ id, ...data });
-    });
-    dispatch(setAllMatches(arr));
-    func(false);
+    if (docSnap.exists()) {
+      const data = docSnap.data().names
+      fn(data.sort((a, b) => parseInt(b.prizeAmount) - parseInt(a.prizeAmount)).map((item, index) => ({
+        ...item,
+        rank: (index + 1).toString(),
+        trophy: index < 3 
+      })))
+    } else {
+      console.log("No such document!");
+    }
   } catch (error) {
     console.log(error);
   }

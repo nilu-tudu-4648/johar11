@@ -1,84 +1,67 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { ScrollView, View } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FlatList, ScrollView, View } from "react-native";
+import { FontAwesome,Entypo } from "@expo/vector-icons";
 import { FSTYLES, SIZES } from "../constants/theme";
 import { AppText } from "../components";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { NAVIGATION } from "../constants/routes";
+import { getPrizeDistributionData } from "../constants/functions";
 const Tab = createMaterialTopTabNavigator();
-
+const renderItem = ({ item }) => (
+  <View  style={{ ...FSTYLES, padding: SIZES.base }}
+  >
+    <View style={{ ...FSTYLES, width: "40%" }}>
+    <View style={{ ...FSTYLES, width: "20%" }}> 
+    <Entypo name="trophy" size={24} color={`${item.trophy ? 'yellow':'white'}`} />
+    <AppText size={1.5} bold={true}>{item.rank}</AppText>
+    </View>
+    <AppText size={1.5}>{item.name}</AppText>
+    </View>
+    <View>
+      <AppText size={1.5}>₹{item.prizeAmount}</AppText>
+    </View>
+  </View>
+)
 export default function ContestDetailsNavigator() {
-  const Winnings = ({ navigation }) => {
-    const { leaderBoard, createPlayers } = useSelector(
-      (state) => state.entities.playersReducer
-    );
-    const { selectedTournament } = useSelector(
-      (state) => state.entities.userReducer
-    );
+ 
+const Winnings = ({ navigation }) => {
+  const { selectedTournament } = useSelector(
+    (state) => state.entities.userReducer
+  );
+  const [players, setPlayers] = useState([]);
 
-    const [players, setPlayers] = useState([
-      { name: "Player 1", prize: 3 }, 
-      { name: "Player 2", prize: 2 },
-      { name: "Player 3", prize: 1 },
-    ]);
+  const getData = useCallback(async () => {
+    try {
+      await getPrizeDistributionData(selectedTournament.id, setPlayers);
+    } catch (error) {
+      console.log(error); // Consider displaying this error to the user
+    }
+  }, [selectedTournament.id]);
 
-    // const [totalAmount, setTotalAmount] = useState(100); // Total amount to distribute among players
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
-    // const distributeAmount = () => {
-    //   const totalPlayers = players.length;
-
-    //   const distributedPlayers = players.map(player => ({
-    //     name: player.name,
-    //     amountReceived: (totalAmount * player.percentage).toFixed(2),
-    //   }));
-
-    //   const totalPercentage = players.reduce((sum, player) => sum + player.percentage, 0);
-    //   const remainingAmount = totalAmount * (1 - totalPercentage);
-    //   const amountPerRemainingPlayer = remainingAmount / (totalPlayers - players.length);
-
-    //   for (let i = players.length; i < totalPlayers; i++) {
-    //     distributedPlayers.push({
-    //       name: `Player ${i + 1}`,
-    //       amountReceived: amountPerRemainingPlayer.toFixed(2),
-    //     });
-    //   }
-
-    //   return distributedPlayers;
-    // };
-
-    // const handleDistribution = () => {
-    //   const distributedPlayers = distributeAmount();
-    //   // You can do something with the distributedPlayers array here (e.g., set it in state, display it, etc.)
-    //   console.log("Amount distribution among players:");
-    //   console.log(distributedPlayers);
-    // };
-    return (
-      <SafeAreaView style={{ flex: 1, padding: SIZES.base }}>
-        <View style={FSTYLES}>
-          <View style={{ ...FSTYLES, width: "35%" }}>
-            <AppText size={1.5}>Rank</AppText>
-          </View>
-          <AppText size={1.5}>Winnings</AppText>
+  return (
+    <SafeAreaView style={{ flex: 1, padding: SIZES.base }}>
+      <View style={FSTYLES}>
+        <View style={{ ...FSTYLES, width: "35%" }}>
+          <AppText size={1.5}>Rank</AppText>
         </View>
-        <ScrollView>
-          {players.map((item, index) => (
-            <View key={index} style={{ ...FSTYLES, padding: SIZES.base }}>
-              <View style={{ ...FSTYLES, width: "30%" }}>
-                <AppText size={1.5}>{index + 1}</AppText>
-              </View>
-              <View>
-                <AppText size={1.5}>{item.prize}</AppText>
-              </View>
-            </View>
-          ))}
-        </ScrollView>
-      </SafeAreaView>
-    );
-  };
-  const LeaderboardScreen = ({ navigation }) => {
+        <AppText size={1.5}>Winnings</AppText>
+      </View>
+      <FlatList
+        data={players}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.name}
+      />
+    </SafeAreaView>
+  );
+};
+const LeaderboardScreen = ({ navigation }) => {
     const { leaderBoard, createPlayers } = useSelector(
       (state) => state.entities.playersReducer
     );
