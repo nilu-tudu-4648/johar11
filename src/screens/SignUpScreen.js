@@ -121,7 +121,7 @@ const SignUpScreen = ({ navigation }) => {
     <View style={styles.container}>
       <AppLoader loading={loading} />
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Image source={require("../../assets/JOHAR.png")} style={styles.logo} />
+        <Image source={require("../../assets/icon.png")} style={styles.logo} />
         <AppText
           bold={true}
           style={{ alignSelf: "center", marginVertical: SIZES.h3 * 2 }}
@@ -198,10 +198,10 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   logo: {
-    width: 100,
-    height: 100,
+    width: 130,
+    height: 130,
     alignSelf: "center",
-    borderRadius: 100 / 2,
+    borderRadius: 130 / 2,
   },
   inputContainer: {
     marginVertical: SIZES.padding * 2,

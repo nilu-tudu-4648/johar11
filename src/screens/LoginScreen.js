@@ -108,7 +108,7 @@ const LoginScreen = ({ navigation }) => {
       >
         <View>
           <Image
-            source={require("../../assets/JOHAR.png")}
+            source={require("../../assets/icon.png")}
             style={styles.logo}
           />
           <AppText bold={true} style={styles.title}>
@@ -171,9 +171,9 @@ const styles = StyleSheet.create({
     padding: SIZES.padding,
   },
   logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 100 / 2,
+    width: 130,
+    height: 130,
+    borderRadius: 130 / 2,
     alignSelf: "center",
     marginVertical: SIZES.padding * 2,
   },
