@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppLoader, AppText, AppView, HomeHeader } from "../components";
 import MatchesItem from "../components/MatchesItem";
-import { filterUpcomingEvents } from "../constants/functions";
+import { filterPastEvents, filterUpcomingEvents } from "../constants/functions";
 import { setpastTournaments, settournaments } from "../store/userReducer";
 import { db } from "../../firebaseConfig";
 import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
@@ -31,11 +31,12 @@ const HomeScreen = () => {
       });
 
       const events = filterUpcomingEvents(arr);
+      const pastEvents =filterPastEvents(arr)
       const upcomingEvents = events.filter(
         (item) => item.status !== "completed" && item.isTesting !=='true'
       );
-      const completedEvents = events.filter(
-        (item) => item.status === "completed" && item.isTesting !=='true'
+      const completedEvents = pastEvents.filter(
+        (item) => item.isTesting !=='true'
       );
       dispatch(settournaments(upcomingEvents));
       dispatch(setpastTournaments(completedEvents));
@@ -114,13 +115,13 @@ const HomeScreen = () => {
           {Completed ? (
             <>
               {pastTournaments.map((item, i) => (
-                <MatchesItem key={i} item={item} />
+                <MatchesItem key={i} item={item} completed={Completed} />
               ))}
             </>
           ) : (
             <>
               {tournaments.map((item, i) => (
-                <MatchesItem key={i} item={item} />
+                <MatchesItem key={i} item={item} fetchData={fetchData} />
               ))}
             </>
           )}

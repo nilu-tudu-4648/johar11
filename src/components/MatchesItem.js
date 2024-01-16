@@ -7,18 +7,31 @@ import { NAVIGATION } from "../constants/routes";
 import { useDispatch } from "react-redux";
 import { setselectedTournament } from "../store/userReducer";
 import { Image } from "react-native";
+import { showToast } from "../constants/functions";
 
-const MatchesItem = ({ item, completed }) => {
+const MatchesItem = ({ item, completed ,fetchData}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
+
+  const tournamentDateTime = new Date(`${item.date} ${item.time}`);
+  const currentDateTime = new Date();
+
+  const navigateToMatchDetails = () => {
+    navigation.navigate(NAVIGATION.MATCH_DETAILS, { item, completed });
+    dispatch(setselectedTournament(item));
+  };
   return (
     <TouchableOpacity
-      onPress={() => {
-        dispatch(setselectedTournament(item));
-        navigation.navigate(NAVIGATION.MATCH_DETAILS, { item, completed });
-      }}
-      style={styles.mainContainer}
-    >
+    onPress={() => {
+      if (completed || tournamentDateTime < currentDateTime) {
+        navigateToMatchDetails();
+      } else {
+        showToast("Match time has ended. Please wait for the results.");
+        fetchData && fetchData('completed');
+      }
+    }}
+    style={styles.mainContainer}
+  >
       <View
         style={{
           ...FSTYLES,
