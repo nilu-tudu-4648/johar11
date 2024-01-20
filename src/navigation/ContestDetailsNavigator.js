@@ -11,20 +11,30 @@ import { NAVIGATION } from "../constants/routes";
 import { getPrizeDistributionData } from "../constants/functions";
 const Tab = createMaterialTopTabNavigator();
 const renderItem = ({ item }) => (
-  <View  style={{ ...FSTYLES, padding: SIZES.base }}
-  >
-    <View style={{ ...FSTYLES, width: "40%" }}>
-    <View style={{ ...FSTYLES, width: "20%" }}> 
-    <Entypo name="trophy" size={24} color={`${item.trophy ? 'yellow':'white'}`} />
-    <AppText size={1.5} bold={true}>{item.rank}</AppText>
+  <View style={{ ...FSTYLES, padding: SIZES.base }}>
+    <View style={{ ...FSTYLES, width: "50%" }}>
+      <View style={{ ...FSTYLES, width: "20%" }}> 
+        <AppText size={1.5} bold={true}>
+          {item.rank}
+        </AppText>
+        <Entypo
+          name="trophy"
+          size={24}
+          color={`${item.trophy ? 'yellow' : 'white'}`}
+        />
+      </View>
+
+      {(isNaN(item.name) || ![1, 2, 3, 4,5,6,7,8,9,10].includes(parseInt(item.name, 10))) && (
+        // Render the name if it's not a numerical value or 1,2,3,4
+        <AppText size={1.5}>{item.name}</AppText>
+      )}
     </View>
-    <AppText size={1.5}>{item.name}</AppText>
-    </View>
+
     <View>
       <AppText size={1.5}>₹{item.prizeAmount}</AppText>
     </View>
   </View>
-)
+);
 export default function ContestDetailsNavigator() {
  
 const Winnings = ({ navigation }) => {

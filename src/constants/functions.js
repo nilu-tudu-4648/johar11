@@ -157,83 +157,52 @@ export const updateUser = async (fdata, dispatch) => {
 export function filterUpcomingEvents(events) {
   const currentDate = new Date();
 
-  // Filter events that have 'date' and 'time' properties in the future
   const upcomingEvents = events.filter((event) => {
-    if (event.date && event.time) {
-      // Parse the date string "30/10/2023"
-      const dateParts = event.date.split("/");
-      const year = parseInt(dateParts[2], 10);
-      const month = parseInt(dateParts[1], 10) - 1; // Months are 0-based
-      const day = parseInt(dateParts[0], 10);
+    let eventDateTime;
 
-      // Parse the time string "4:32 PM"
-      const timeParts = event.time.match(/\d+/g);
-      const hours = parseInt(timeParts[0], 10) % 12; // Handle 12-hour format
-      const minutes = parseInt(timeParts[1], 10);
-      const isPM = event.time.includes("PM");
-
-      const eventTime = new Date(); // Create a new Date object for the time
-      eventTime.setHours(hours);
-      eventTime.setMinutes(minutes);
-
-      if (isPM) {
-        eventTime.setHours(eventTime.getHours() + 12); // Add 12 hours for PM
-      }
-
-      const eventDateTime = new Date(
-        year,
-        month,
-        day,
-        eventTime.getHours(),
-        eventTime.getMinutes()
-      );
-
-      return eventDateTime > currentDate;
+    if (event.dateAndTime) {
+      // Use ISO 8601 date format if "dateAndTime" is available
+      eventDateTime = new Date(event.dateAndTime);
+    } else if (event.date && event.time) {
+      // Use "date" and "time" properties for other events
+      const [day, month, year] = event.date.split("/");
+      const [hours, minutes] = event.time.split(":");
+      eventDateTime = new Date(year, month - 1, day, hours, minutes);
+    } else {
+      // Skip events without proper date/time information
+      return false;
     }
-    return false;
+
+    const currentDateUTC = new Date(currentDate.toUTCString());
+    const eventDateTimeUTC = new Date(eventDateTime.toUTCString());
+
+    return eventDateTimeUTC > currentDateUTC;
   });
+
   return upcomingEvents;
 }
+
+
+
+
+
 export function filterPastEvents(events) {
   const currentDate = new Date();
 
-  // Filter events that have 'date' and 'time' properties in the past
+  // Filter events that have 'dateAndTime' property in the past
   const pastEvents = events.filter((event) => {
-    if (event.date && event.time) {
-      // Parse the date string "30/10/2023"
-      const dateParts = event.date.split("/");
-      const year = parseInt(dateParts[2], 10);
-      const month = parseInt(dateParts[1], 10) - 1; // Months are 0-based
-      const day = parseInt(dateParts[0], 10);
+    if (event.dateAndTime) {
+      const eventDateTime = new Date(event.dateAndTime);
 
-      // Parse the time string "4:32 PM"
-      const timeParts = event.time.match(/\d+/g);
-      const hours = parseInt(timeParts[0], 10) % 12; // Handle 12-hour format
-      const minutes = parseInt(timeParts[1], 10);
-      const isPM = event.time.includes("PM");
-
-      const eventTime = new Date(); // Create a new Date object for the time
-      eventTime.setHours(hours);
-      eventTime.setMinutes(minutes);
-
-      if (isPM) {
-        eventTime.setHours(eventTime.getHours() + 12); // Add 12 hours for PM
-      }
-
-      const eventDateTime = new Date(
-        year,
-        month,
-        day,
-        eventTime.getHours(),
-        eventTime.getMinutes()
-      );
-
+      // Compare 'dateAndTime' with the current date
       return eventDateTime < currentDate;
     }
     return false;
   });
+
   return pastEvents;
 }
+
 export const getTournaments = async (dispatch, setloading) => {
   try {
     // Create a query for the tournaments collection

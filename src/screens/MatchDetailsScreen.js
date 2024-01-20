@@ -72,7 +72,7 @@ const MatchDetailsScreen = ({ navigation, route }) => {
           />
         )}
       </View>
-      {item.status === "completed" && ContestDetailsNavigator()}
+      {ContestDetailsNavigator()}
     </View>
   );
 };

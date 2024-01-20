@@ -11,21 +11,25 @@ import { showToast } from "../constants/functions";
 
 const MatchesItem = ({ item, completed ,fetchData}) => {
   const navigation = useNavigation();
-  const dispatch = useDispatch();
-
-  const tournamentDateTime = new Date(`${item.date} ${item.time}`);
-  const currentDateTime = new Date();
-
+  const dispatch = useDispatch()
   const navigateToMatchDetails = () => {
     navigation.navigate(NAVIGATION.MATCH_DETAILS, { item, completed });
     dispatch(setselectedTournament(item));
   };
+  
+  const tournamentDateTime = new Date(item.dateAndTime)
+  const currentDateTime = new Date();
   return (
     <TouchableOpacity
     onPress={() => {
-      if (completed || tournamentDateTime < currentDateTime) {
+if(completed){
+
+  navigateToMatchDetails();
+}else     if (!completed && currentDateTime < tournamentDateTime) {
+        console.log('Navigating to match details...');
         navigateToMatchDetails();
       } else {
+        console.log('Match time has ended. Fetching completed matches...');
         showToast("Match time has ended. Please wait for the results.");
         fetchData && fetchData('completed');
       }
