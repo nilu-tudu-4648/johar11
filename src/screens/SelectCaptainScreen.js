@@ -158,6 +158,7 @@ const SelectCaptainScreen = ({ navigation }) => {
         userName: user.firstName + " " + user.lastName,
         players: playersArray,
         matchId: selectedTournament.id,
+        profilePic:user.profilePic
       });
       await getLeaderBoard(dispatch, selectedTournament.id);
       showToast("Team Saved Successfully");

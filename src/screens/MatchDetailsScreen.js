@@ -72,7 +72,7 @@ const MatchDetailsScreen = ({ navigation, route }) => {
           />
         )}
       </View>
-      {ContestDetailsNavigator()}
+      {ContestDetailsNavigator(item)}
     </View>
   );
 };

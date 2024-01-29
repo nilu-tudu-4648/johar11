@@ -68,7 +68,7 @@ const HomeScreen = () => {
   return (
     <>
       <AppLoader loading={loading} />
-      <HomeHeader header={"JOHAR11"} />
+      <HomeHeader header={"JOHAR11"} headerTextStyle={{right:SIZES.largeTitle*1.5}} />
       <AppView>
         <View
           style={{

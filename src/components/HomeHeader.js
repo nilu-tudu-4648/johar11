@@ -10,7 +10,7 @@ import { TouchableOpacity } from "react-native";
 import AppText from "./AppText";
 import { useSelector } from "react-redux";
 import { Image } from "react-native";
-const HomeHeader = ({ style, iconColor, header, headerColor = "" }) => {
+const HomeHeader = ({ style, iconColor, header, headerColor = "",headerTextStyle }) => {
   const navigation = useNavigation();
   const { user } = useSelector((state) => state.entities.userReducer);
 
@@ -36,6 +36,7 @@ const HomeHeader = ({ style, iconColor, header, headerColor = "" }) => {
           style={{
             width: "33%",
             alignItems: "center",
+            ...headerTextStyle
           }}
         >
           {header ? (
