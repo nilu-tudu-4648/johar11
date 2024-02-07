@@ -43,7 +43,7 @@ const AppButton = ({
           style={[
             {
               ...styles.bntstyle,
-              backgroundColor: disabled ? COLORS.gray : COLORS.background,
+              backgroundColor: disabled ? COLORS.gray : COLORS.purple,
             },
             style,
           ]}

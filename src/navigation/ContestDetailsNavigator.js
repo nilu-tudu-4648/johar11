@@ -154,7 +154,7 @@ export default function ContestDetailsNavigator(matchDetails) {
               key={index}
               style={{ ...FSTYLES, padding: SIZES.base }}
             >
-              <View style={{ ...FSTYLES, width: "30%" }}>
+              <View style={{ width: "30%" ,flexDirection:'row',alignItems:'center'}}>
                 {item.profilePic ? (
                   <Avatar.Image
                     size={SIZES.base * 3}

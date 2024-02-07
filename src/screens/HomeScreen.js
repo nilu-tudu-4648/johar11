@@ -1,4 +1,4 @@
-import { ScrollView, View, StyleSheet } from "react-native";
+import { ScrollView, View, StyleSheet, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AppLoader, AppText, AppView, HomeHeader } from "../components";
@@ -10,7 +10,7 @@ import { collection, getDocs, onSnapshot, query } from "firebase/firestore";
 import { FIRESTORE_COLLECTIONS, IMAGES } from "../constants/data";
 import { COLORS, FSTYLES, SIZES } from "../constants/theme";
 import { TouchableOpacity } from "react-native";
-import { SliderBox } from "react-native-image-slider-box";
+import Carousel from "react-native-reanimated-carousel";
 const HomeScreen = () => {
   const { tournaments, pastTournaments } = useSelector(
     (state) => state.entities.userReducer
@@ -68,21 +68,37 @@ const HomeScreen = () => {
   return (
     <>
       <AppLoader loading={loading} />
-      <HomeHeader header={"JOHAR11"} headerTextStyle={{right:SIZES.largeTitle*1.5}} />
+      <HomeHeader header={"JOHAR11"} headerTextStyle={{right:SIZES.largeTitle*2}} />
       <AppView>
         <View
           style={{
             bottom: 15,
           }}
         >
-          <SliderBox
-            images={IMAGES}
-            sliderBoxHeight={100}
-            resizeMode={"contain"}
-            autoplay
-            parentWidth={SIZES.width * 0.935}
-            circleLoop
-          />
+           <View>
+            <Carousel
+              loop
+              autoPlay={true}
+              width={SIZES.width*.935}
+              height={SIZES.width / 4}
+              data={IMAGES}
+              scrollAnimationDuration={1000}
+              renderItem={({ item, index }) => (
+                <View
+                  style={{
+                    height:'100%',
+                    justifyContent: "center",
+                  }}
+                >
+                  <Image
+                    source={item}
+                    resizeMode="contain"
+                    style={{width:'100%'}}
+                  />
+                </View>
+              )}
+            />
+          </View>
         </View>
         <View style={FSTYLES}>
           <TouchableOpacity

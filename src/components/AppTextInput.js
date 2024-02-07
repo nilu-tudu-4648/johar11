@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: COLORS.white,
         width: "100%",
+        borderRadius: SIZES.base1,
     },
     textInput: {
         height: SIZES.largeTitle * .95,

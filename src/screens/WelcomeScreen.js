@@ -23,7 +23,7 @@ const WelcomeScreen = ({ navigation }) => {
         }}
       >
         <Image
-          source={require("../../assets/welcome.jpg")}
+          source={require("../../assets/ronald.jpg")}
           style={{ width: "100%", resizeMode: "contain", height: "100%" }}
         />
       </View>
@@ -48,14 +48,14 @@ const WelcomeScreen = ({ navigation }) => {
           }}
         >
           <AppButton
-            title="REGISTER"
+            title="Register"
             style={{ marginVertical: SIZES.h4 }}
             onPress={() =>
               navigation.navigate(NAVIGATION.REGISTER, { register: true })
             }
           />
           <AppButton
-            title="LOGIN"
+            title="Login"
             style={{ marginVertical: SIZES.h4 }}
             onPress={() =>
               navigation.navigate(NAVIGATION.LOGIN, { register: false })

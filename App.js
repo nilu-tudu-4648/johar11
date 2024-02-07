@@ -49,21 +49,7 @@ const App = () => {
   // npx expo  start --dev-client
   // eas build --platform android
   // eas build --profile development --platform android
-  // get ColorPropType(): $FlowFixMe {
-  //   return require('deprecated-react-native-prop-types').ColorPropType;
-  // },
-  
-  // get EdgeInsetsPropType(): $FlowFixMe {
-  //   return require('deprecated-react-native-prop-types').EdgeInsetsPropType;
-  // },
-  
-  // get PointPropType(): $FlowFixMe {
-  //   return require('deprecated-react-native-prop-types').PointPropType;
-  // },
-  
-  // get ViewPropTypes(): $FlowFixMe {
-  //   return require('deprecated-react-native-prop-types').ViewPropTypes;
-  // },
+ 
   return (
     <NavigationContainer>
             <ForegroundHandler />

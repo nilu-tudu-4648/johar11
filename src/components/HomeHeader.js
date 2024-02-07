@@ -31,6 +31,7 @@ const HomeHeader = ({ style, iconColor, header, headerColor = "",headerTextStyle
           name="reorder-three-sharp"
           size={SIZES.largeTitle * 0.8}
           color={iconColor ? iconColor : COLORS.white}
+          style={{right:8}}
         />
         <View
           style={{
@@ -56,6 +57,7 @@ const HomeHeader = ({ style, iconColor, header, headerColor = "",headerTextStyle
               admin: user.admin === "true" ? true : false,
             })
           }
+          style={{right:1}}
         >
           <FontAwesome5
             name="user-circle"

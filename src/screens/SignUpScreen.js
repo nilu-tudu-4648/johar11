@@ -1,4 +1,4 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, ImageBackground } from "react-native";
 import React, { useState } from "react";
 import { COLORS, SIZES } from "../constants/theme";
 import { useForm } from "react-hook-form";
@@ -118,6 +118,10 @@ const SignUpScreen = ({ navigation }) => {
     []
   );
   return (
+    <ImageBackground
+    style={{ height: SIZES.height,flex:1 }}
+    source={require("../../assets/messi.jpg")}
+  >
     <View style={styles.container}>
       <AppLoader loading={loading} />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -126,6 +130,7 @@ const SignUpScreen = ({ navigation }) => {
           bold={true}
           style={{ alignSelf: "center", marginVertical: SIZES.h3 * 2 }}
           size={2.5}
+          color={COLORS.white}
         >
           {"Registration"}
         </AppText>
@@ -185,6 +190,7 @@ const SignUpScreen = ({ navigation }) => {
         <AppButton title="Register" onPress={handleSubmit(onSubmit)} />
       </View>
     </View>
+    </ImageBackground>
   );
 };
 
@@ -193,17 +199,16 @@ export default SignUpScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: SIZES.padding,
+    padding: SIZES.h1,
     justifyContent: "space-between",
-    backgroundColor: COLORS.white,
   },
   logo: {
-    width: 130,
-    height: 130,
+    width: 90,
+    height: 90,
     alignSelf: "center",
-    borderRadius: 130 / 2,
+    borderRadius: 90 / 2,
   },
   inputContainer: {
-    marginVertical: SIZES.padding * 2,
+    marginVertical: SIZES.padding * 5,
   },
 });

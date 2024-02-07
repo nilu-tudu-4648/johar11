@@ -1,18 +1,21 @@
-import { StyleSheet, View, BackHandler, Image, ScrollView } from "react-native";
+import {
+  StyleSheet,
+  View,
+  BackHandler,
+  Image,
+  ScrollView,
+  ImageBackground,
+  KeyboardAvoidingView,
+} from "react-native";
 import React, { useState } from "react";
-import { COLORS, SIZES } from "../constants/theme";
+import { COLORS, FSTYLES, SIZES } from "../constants/theme";
 import { useForm } from "react-hook-form";
 import AppButton from "../components/AppButton";
 import AppText from "../components/AppText";
 import FormInput from "../components/FormInput";
 import AppLoader from "../components/AppLoader";
 import { db } from "../../firebaseConfig";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { NAVIGATION } from "../constants/routes";
 import { useDispatch } from "react-redux";
 import { setLoginUser } from "../store/userReducer";
@@ -97,68 +100,82 @@ const LoginScreen = ({ navigation }) => {
   );
   const phonePattern = /^[6-9][0-9]{9}$/;
   return (
-    <View style={styles.container}>
-      <AppLoader loading={loading} />
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          flexGrow: 1,
-          justifyContent: "space-between",
-        }}
-      >
-        <View>
-          <Image
-            source={require("../../assets/icon.png")}
-            style={styles.logo}
-          />
-          <AppText bold={true} style={styles.title}>
-            {"Login"}
-          </AppText>
-        </View>
-        <View style={styles.inputContainer}>
-          <FormInput
-            control={control}
-            rules={{
-              required: "This field is mandatory",
-              pattern: {
-                value: phonePattern,
-                message: "Please enter a valid phone number",
-              },
-              minLength: {
-                value: 10,
-                message: "Please enter a valid phone number",
-              },
-            }}
-            keyboardType="numeric"
-            placeholder="Enter Mobile Number"
-            name="phone"
-            maxLength={10}
-          />
-          {!forgotPin ? (
+    <ImageBackground
+      style={{ height: SIZES.height, flex: 1 }}
+      source={require("../../assets/messi.jpg")}
+    >
+      <View style={styles.container}>
+        <AppLoader loading={loading} />
+        <View style={{ flex: 0.3 }} />
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: "space-between",
+          }}
+        >
+          <View style={{ ...FSTYLES, paddingHorizontal: "6%" }}>
+            <Image
+              source={require("../../assets/icon.png")}
+              style={styles.logo}
+            />
+            <View>
+              <AppText bold={true} size={3} style={styles.title}>
+                {"Login Account"}
+              </AppText>
+              <AppText bold={true} size={2} style={{ ...styles.title }}>
+                {"Hello ,Welcome Back"}
+              </AppText>
+            </View>
+          </View>
+          <View style={styles.inputContainer}>
             <FormInput
               control={control}
-              rules={{ required: "This field is mandatory" }}
-              placeholder="Password"
-              name="password"
-              secureTextEntry={true}
+              rules={{
+                required: "This field is mandatory",
+                pattern: {
+                  value: phonePattern,
+                  message: "Please enter a valid phone number",
+                },
+                minLength: {
+                  value: 10,
+                  message: "Please enter a valid phone number",
+                },
+              }}
+              keyboardType="numeric"
+              placeholder="Enter Mobile Number"
+              name="phone"
+              maxLength={10}
             />
-          ) : null}
-          <TouchableOpacity
-            style={{ alignSelf: "flex-end" }}
-            onPress={() => setforgotPin(true)}
-          >
-            <AppText size={1.3}>Forgot Pin</AppText>
-          </TouchableOpacity>
+            {!forgotPin ? (
+              <FormInput
+                control={control}
+                rules={{ required: "This field is mandatory" }}
+                placeholder="Password"
+                name="password"
+                secureTextEntry={true}
+              />
+            ) : null}
+            {!forgotPin && (
+              <TouchableOpacity
+                style={{ alignSelf: "flex-end" }}
+                onPress={() => setforgotPin(true)}
+              >
+                <AppText size={1.3} color={COLORS.white}>
+                  Forgot Pin
+                </AppText>
+              </TouchableOpacity>
+            )}
+          </View>
+        </ScrollView>
+        <View>
+          <AppButton
+            title={forgotPin ? "Get Password" : "Login"}
+            onPress={handleSubmit(onSubmit)}
+          />
         </View>
-        <View style={{ flex: 0.4 }} />
-      </ScrollView>
-      <View>
-        <AppButton
-          title={forgotPin ? "Get Password" : "Login"}
-          onPress={handleSubmit(onSubmit)}
-        />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -167,20 +184,15 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: COLORS.white,
-    padding: SIZES.padding,
+    padding: SIZES.h1,
   },
   logo: {
-    width: 130,
-    height: 130,
-    borderRadius: 130 / 2,
-    alignSelf: "center",
-    marginVertical: SIZES.padding * 2,
+    width: 90,
+    height: 90,
+    borderRadius: 90 / 2,
   },
   title: {
-    alignSelf: "center",
-    marginVertical: SIZES.h3,
-    fontSize: SIZES.h2,
+    color: COLORS.white,
   },
   inputContainer: {
     marginVertical: SIZES.padding * 2,

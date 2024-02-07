@@ -8,6 +8,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "./src/constants/functions";
 import { AppButton } from "./src/components";
 import { Image } from "react-native";
+import Constants from 'expo-constants';
+
+const appVersion = Constants.manifest2.runtimeVersion;
+
 const DrawerItems = ({ navigation }) => {
   const { user } = useSelector((state) => state.entities.userReducer);
   const dispatch = useDispatch();
@@ -51,7 +55,7 @@ const DrawerItems = ({ navigation }) => {
           }}
         >
           <AppText size={1.5} color={COLORS.background}>
-            1.0.9
+            {appVersion}
           </AppText>
           <AppButton
             title={"Logout"}
