@@ -21,6 +21,7 @@ import {
 import { StyleHeader } from "../components";
 import CreateTeamScreen from "../screens/CreateTeamScreen";
 import * as Notifications from "expo-notifications";
+import { navigate } from '../../Rootnavigation';
 const Stack = createNativeStackNavigator();
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -50,6 +51,24 @@ function AppNavigator() {
   React.useEffect(() => {
     checkUserDetails();
   }, [userLoggedIn]);
+
+  // const notificationListener = React.useRef();
+  // const responseListener = React.useRef();
+
+  // React.useEffect(() => {
+
+  //   responseListener.current =
+  //     Notifications.addNotificationResponseReceivedListener((response) => {
+  //      navigate(NAVIGATION.REGISTER)
+  //     });
+  //   return () => {
+  //     Notifications.removeNotificationSubscription(
+  //       notificationListener.current
+  //     );
+  //     Notifications.removeNotificationSubscription(responseListener.current);
+  //   };
+  // }, []);
+
   const options = { headerShown: false };
   return (
     <Stack.Navigator

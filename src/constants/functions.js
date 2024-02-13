@@ -16,12 +16,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebaseConfig";
 import {
-  setAllMatches,
-  setAllPlayers,
-  setAllTeams,
-  setAllUsers,
-} from "../store/adminReducer";
-import {
   getStorage,
   ref,
   getDownloadURL,

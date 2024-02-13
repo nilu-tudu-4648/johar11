@@ -1,20 +1,25 @@
 import React, { useEffect } from "react";
 import "react-native-gesture-handler";
-import 'expo-dev-client';
+import "expo-dev-client";
 import { store } from "./src/store/configureStore";
 import { Provider } from "react-redux";
 import { configureFonts, useTheme, PaperProvider } from "react-native-paper";
 import DrawerNavigator from "./src/navigation/DrawerNavigator";
 import { NavigationContainer } from "@react-navigation/native";
-import { notificationListner, registerForPushNotificationsAsync, requestUserPermission } from './src/notification/notifications';
-import ForegroundHandler from './src/notification/ForegroundHandler';
+import {
+  notificationListner,
+  registerForPushNotificationsAsync,
+  requestUserPermission,
+} from "./src/notification/notifications";
+import ForegroundHandler from "./src/notification/ForegroundHandler";
 import { useFonts } from "expo-font";
+import { navigationRef } from "./Rootnavigation";
 const App = () => {
   useEffect(() => {
-    requestUserPermission()
-    notificationListner()
-    registerForPushNotificationsAsync()
-  }, [])
+    requestUserPermission();
+    notificationListner();
+    registerForPushNotificationsAsync();
+  }, []);
   const [loaded] = useFonts({
     "Inter-Medium": require("./assets/fonts/Inter-Medium.ttf"),
   });
@@ -49,10 +54,9 @@ const App = () => {
   // npx expo  start --dev-client
   // eas build --platform android
   // eas build --profile development --platform android
- 
   return (
-    <NavigationContainer>
-            <ForegroundHandler />
+    <NavigationContainer ref={navigationRef}>
+      <ForegroundHandler />
       <Provider store={store}>
         <PaperProvider theme={{ ...theme, fonts }}>
           <DrawerNavigator />

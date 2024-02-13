@@ -27,6 +27,7 @@ const SelectCaptainScreen = ({ navigation }) => {
     (state) => state.entities.userReducer
   );
   const dispatch = useDispatch();
+  const [captains, setcaptains] = useState(false);
 
   const updatedPlayersFunc = (item, type) => {
     const updatedPlayers = playersArray.map((player) => {
@@ -56,6 +57,14 @@ const SelectCaptainScreen = ({ navigation }) => {
     });
 
     setPlayersArray(updatedPlayers);
+    const checkCaptai = updatedPlayers.find(
+      (ite) => ite.selectedCaptain === true
+    );
+    const checkVicecaptain = updatedPlayers.find(
+      (ite) => ite.selectedViceCaptain === true
+    );
+
+    setcaptains(Boolean(checkCaptai && checkVicecaptain));
   };
 
   useEffect(() => {
@@ -149,6 +158,7 @@ const SelectCaptainScreen = ({ navigation }) => {
   };
 
   const saveTeamsToFirebase = async () => {
+    if (!captains) return showToast("Please select captain and vice captain");
     try {
       const teamsCollectionRef = collection(
         db,
@@ -158,7 +168,7 @@ const SelectCaptainScreen = ({ navigation }) => {
         userName: user.firstName + " " + user.lastName,
         players: playersArray,
         matchId: selectedTournament.id,
-        profilePic:user.profilePic
+        profilePic: user.profilePic,
       });
       await getLeaderBoard(dispatch, selectedTournament.id);
       showToast("Team Saved Successfully");
@@ -178,10 +188,12 @@ const SelectCaptainScreen = ({ navigation }) => {
   );
   return (
     <>
-      <View style={{ flex: 1,backgroundColor: COLORS.white }}>
+      <View style={{ flex: 1, backgroundColor: COLORS.white }}>
         <ContestHeader title={"Create Team"} />
         <View style={{ ...STYLES, marginVertical: SIZES.base }}>
-          <AppText bold={true} size={1.8}>Choose your Captain and Vice Captain</AppText>
+          <AppText bold={true} size={1.8}>
+            Choose your Captain and Vice Captain
+          </AppText>
           <AppText size={1.5}>C gets 2X points, VC gets 1.5x points</AppText>
         </View>
         <AppDivider />
