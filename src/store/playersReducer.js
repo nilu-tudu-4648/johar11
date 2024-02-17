@@ -32,6 +32,9 @@ const playersReducer = createSlice({
     setcreatePlayers: (playersReducer, action) => {
       playersReducer.createPlayers = action.payload;
     },
+    resetPlayers: (playersReducer, action) => {
+      playersReducer.players = [];
+    },
   },
 });
 
@@ -40,5 +43,6 @@ export const {
   setPlayersForTournament,
   setFilterPlayersForTournament,
   setleaderBoard,
-  setcreatePlayers
+  setcreatePlayers,
+  resetPlayers
 } = playersReducer.actions;

@@ -1,11 +1,11 @@
-import { StyleSheet, View, ImageBackground, Image } from "react-native";
+import { StyleSheet, View, ImageBackground, Image, BackHandler } from "react-native";
 import React from "react";
 import { AppText, AppView } from "../components";
 import { COLORS, SIZES, STYLES } from "../constants/theme";
 import { Entypo } from "@expo/vector-icons";
 import ContestHeader from "../components/ContestHeader";
 import { truncateString } from "../constants/functions";
-const WinningPointsScreen = ({ route }) => {
+const WinningPointsScreen = ({ route,navigation }) => {
   const { selectedTeam, playersArray } = route.params;
   const renderPlayers = (playerType, header) => {
     return (
@@ -53,6 +53,14 @@ const WinningPointsScreen = ({ route }) => {
       </>
     );
   };
+  BackHandler.addEventListener(
+    "hardwareBackPress",
+    () => {
+      navigation.goBack();
+      return () => true;
+    },
+    []
+  );
   return (
     <>
       <ContestHeader />

@@ -17,7 +17,7 @@ import { getLeaderBoard, showToast } from "../constants/functions";
 import { FIRESTORE_COLLECTIONS } from "../constants/data";
 import { NAVIGATION } from "../constants/routes";
 import { BackHandler } from "react-native";
-import { setFilterPlayersForTournament } from "../store/playersReducer";
+import { resetPlayers, setFilterPlayersForTournament } from "../store/playersReducer";
 
 const SelectCaptainScreen = ({ navigation }) => {
   const [playersArray, setPlayersArray] = useState([]);
@@ -172,6 +172,7 @@ const SelectCaptainScreen = ({ navigation }) => {
       });
       await getLeaderBoard(dispatch, selectedTournament.id);
       showToast("Team Saved Successfully");
+      dispatch(resetPlayers())
       navigation.navigate(NAVIGATION.HOME);
     } catch (error) {
       console.log("Error:", error);

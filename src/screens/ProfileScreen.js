@@ -11,9 +11,11 @@ import {
   showToast,
   updateUser,
 } from "../constants/functions";
+import DeleteUserDialog from '../components/DeleteUserDialog'
 export default function ProfileScreen({ navigation, route }) {
   const admin = route.params?.admin;
   const [image, setimage] = useState(null);
+  const [deleteDialogvisible, setdeleteDialogvisible] = useState(false);
   const { user } = useSelector((state) => state.entities.userReducer);
   const dispatch = useDispatch();
   const pickImage = async () => {
@@ -51,7 +53,7 @@ export default function ProfileScreen({ navigation, route }) {
     []
   );
   return (
-    <View>
+    <>
       <View style={styles.headerstyle}>
         <TouchableOpacity onPress={pickImage}>
           {user.profilePic ? (
@@ -77,6 +79,9 @@ export default function ProfileScreen({ navigation, route }) {
         </AppText>
       </View>
       <View style={styles.container}>
+        <View style={{
+    height: SIZES.height * 0.4,flex:1,justifyContent:'space-around'}}>
+      
         {user.email && (
           <View style={{ ...styles.gpsButton }}>
             <AppText size={1.8}>{user.email}</AppText>
@@ -91,23 +96,36 @@ export default function ProfileScreen({ navigation, route }) {
         >
           <AppText size={1.8}>Points System</AppText>
         </TouchableOpacity>
-      </View>
     </View>
+    <View    style={{flex:1,justifyContent:'flex-end'}}>
+        <TouchableOpacity
+     
+            onPress={() => setdeleteDialogvisible(true)}
+          >
+            <AppText size={1.5}>
+              Delete User
+            </AppText>
+          </TouchableOpacity>
+          </View>
+      </View>
+      <DeleteUserDialog
+      visible={deleteDialogvisible} 
+      setvisible={setdeleteDialogvisible}
+      />
+    </>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
-    // width: "100%",
-    height: SIZES.height * 0.4,
+    flex: 1,
     alignItems: "center",
     justifyContent: "space-around",
     padding: SIZES.base,
   },
   gpsButton: {
     ...FSTYLES,
-    width: "90%",
+    width: SIZES.width*.8,
     borderRadius: SIZES.base,
     padding: SIZES.base,
     elevation: SIZES.base1,
